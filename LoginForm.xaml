@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankApp"
         mc:Ignorable="d"
-        Title="LoginForm" Height="450" Width="800">
+        Title="Login" Height="320" Width="610"
+        FontFamily="Arial Black" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="ToolWindow"
+        >
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+            <GradientStop Color="#FFE8E8E8" Offset="1"/>
+            <GradientStop Color="#FF908AD1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.2*"/>
+            <RowDefinition Height="0.8*"/>
+            <RowDefinition Height="0.8*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="BankAPP - přihlášení" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="50" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Content="Jméno:" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="30" Margin="0,0,30,0"/>
+        <Label Content="Heslo:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="30" Margin="0,0,30,0"/>
+
+        <TextBox x:Name="tbName" Text="admin" FontSize="35"  Grid.Row="1" Grid.Column="1" Margin="10,10,40,10" Foreground="Black" BorderBrush="Black" />
+        <PasswordBox x:Name="tbPassword" Password="root" FontSize="35" Grid.Row="2" Grid.Column="1" Margin="10,10,40,10" Foreground="Black" BorderBrush="Black" />
+
+        <Button x:Name="butOk" Content="Potvrdit" Grid.Column="0" FontSize="20" Grid.Row="3" Margin="15" Cursor="Hand" BorderBrush="Black" BorderThickness="2" Background="Green" Foreground="LightGray" FontWeight="Bold" Click="butOk_Click"/>
+        <Button x:Name="butCancel" Content="Ukončit" Grid.Column="1" FontSize="20" Grid.Row="3" Margin="15" Cursor="Hand" BorderBrush="Black" BorderThickness="2" Background="DarkRed" Foreground="LightGray" FontWeight="Bold" Click="butCancel_Click"/>
+
     </Grid>
 </Window>
