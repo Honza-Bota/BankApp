@@ -5,38 +5,83 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankApp"
         mc:Ignorable="d"
-        Title="Login" Height="320" Width="610"
-        FontFamily="Arial Black" ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        WindowStyle="ToolWindow"
-        >
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-            <GradientStop Color="#FFE8E8E8" Offset="1"/>
-            <GradientStop Color="#FF908AD1"/>
-        </LinearGradientBrush>
-    </Window.Background>
+        Title="" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Foreground="{x:Null}" Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Center" Height="454.283" Width="352.453" Background="{x:Null}">
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="ButtonEnter" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true" Cursor="Hand" CornerRadius="22">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1.2*"/>
-            <RowDefinition Height="0.8*"/>
-            <RowDefinition Height="0.8*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <Label Content="BankAPP - přihlášení" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="50" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <Label Content="Jméno:" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="30" Margin="0,0,30,0"/>
-        <Label Content="Heslo:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="30" Margin="0,0,30,0"/>
-
-        <TextBox x:Name="tbName" Text="admin" FontSize="35"  Grid.Row="1" Grid.Column="1" Margin="10,10,40,10" Foreground="Black" BorderBrush="Black" />
-        <PasswordBox x:Name="tbPassword" Password="root" FontSize="35" Grid.Row="2" Grid.Column="1" Margin="10,10,40,10" Foreground="Black" BorderBrush="Black" />
-
-        <Button x:Name="butOk" Content="Potvrdit" Grid.Column="0" FontSize="20" Grid.Row="3" Margin="15" Cursor="Hand" BorderBrush="Black" BorderThickness="2" Background="Green" Foreground="LightGray" FontWeight="Bold" Click="butOk_Click"/>
-        <Button x:Name="butCancel" Content="Ukončit" Grid.Column="1" FontSize="20" Grid.Row="3" Margin="15" Cursor="Hand" BorderBrush="Black" BorderThickness="2" Background="DarkRed" Foreground="LightGray" FontWeight="Bold" Click="butCancel_Click"/>
-
+        <Grid x:Name="Design" Margin="1.942,1.388,2.497,2.895">
+            <Rectangle x:Name="Shadow" Fill="#FFB9B9B9" HorizontalAlignment="Left" Height="440" Margin="9,0,0,0" Stroke="#FFB9B9B9" VerticalAlignment="Top" Width="331.951" RadiusY="11.608" RadiusX="11.608" Opacity="0.7"/>
+            <Rectangle x:Name="AppBackground" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="440" Margin="16.063,10,0,0" Stroke="White" VerticalAlignment="Top" Width="331.951" RadiusY="11.608" RadiusX="11.608"/>
+            <Label Content="BankAPP" HorizontalAlignment="Left" Height="68.749" Margin="46.315,32.251,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Width="270.403" Foreground="#FF2C43D8" FontWeight="Bold" FontSize="45"/>
+            <Label Content="Login" HorizontalAlignment="Left" Height="43" Margin="46.315,116,0,0" VerticalAlignment="Top" Width="147.865" FontWeight="Bold" FontSize="24" Foreground="Black"/>
+            <Rectangle x:Name="DesignSideBlock" Fill="#FF0000B8" HorizontalAlignment="Left" Height="56" Margin="0,111,0,0" VerticalAlignment="Top" Width="28" RadiusY="2.5" RadiusX="2.5"/>
+            <Label Content="Name:" HorizontalAlignment="Left" Height="32" Margin="46.315,187,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="18" Width="88.21"/>
+            <Label Content="Password:" HorizontalAlignment="Left" Height="32" Margin="46.314,254,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="18"/>
+            <Path x:Name="UnderlineTbName" Data="M268.345,206.106 L443.452,206.106" Fill="Blue" HorizontalAlignment="Left" Height="2" Margin="139.525,220.106,0,0" Stretch="Fill" Stroke="Blue" VerticalAlignment="Top" Width="176.107" StrokeThickness="6"/>
+            <Path x:Name="UnderlinePasswordbox" Data="M268.345,206.106 L443.452,206.106" Fill="Blue" HorizontalAlignment="Left" Height="2" Margin="139.525,287.106,0,0" Stretch="Fill" Stroke="Blue" VerticalAlignment="Top" Width="176.107" StrokeThickness="6"/>
+        </Grid>
+        <Grid x:Name="Controls" Margin="48.257,15.424,6.353,22.985">
+            <TextBox x:Name="tbName" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="29.788" Margin="93.21,176.282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175.107" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="15" Foreground="Black" Text="Admin"/>
+            <PasswordBox x:Name="tbPassword" HorizontalAlignment="Left"  VerticalContentAlignment="Center" Height="29.788" Margin="95.296,243.282,0,0" VerticalAlignment="Top" Width="175.107" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="15" Foreground="Black" Password="root"/>
+            <Button x:Name="butEnter" Click="butEnter_Click" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Enter" HorizontalAlignment="Left" Height="45.405" Margin="0,340.111,0,0" VerticalAlignment="Top" Width="268.317" Cursor="Hand" BorderBrush="{x:Null}" Foreground="White" Background="#FF0000B8" FontSize="20" FontWeight="Bold" Style="{DynamicResource ButtonEnter}"/>
+            <CheckBox Content="Remember me" HorizontalAlignment="Left" Height="16.277" Margin="16.143,399.597,0,0" VerticalAlignment="Top" Width="105.489" BorderBrush="{x:Null}" Background="White" IsChecked="True" Foreground="Black" Cursor="Hand" IsEnabled="False"/>
+            <Button x:Name="butExit" Click="butExit_Click" Content="X" HorizontalAlignment="Left" Height="30" Margin="267.843,0,0,0" VerticalAlignment="Top" Width="30" Cursor="Hand" FontSize="20" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Arial Black"/>
+        </Grid>
     </Grid>
 </Window>
+

@@ -24,12 +24,12 @@ namespace BankApp
             InitializeComponent();
         }
 
-        private void butOk_Click(object sender, RoutedEventArgs e)
+        private void butEnter_Click(object sender, RoutedEventArgs e)
         {
             string name = tbName.Text;
             string password = tbPassword.Password;
 
-            if (name == "admin" && password == "root")
+            if (name == "Admin" && password == "root")
             {
                 BankInterfaceForm bank = new BankInterfaceForm();
                 bank.Show();
@@ -45,7 +45,7 @@ namespace BankApp
             }
         }
 
-        private void butCancel_Click(object sender, RoutedEventArgs e)
+        private void butExit_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult rslt = MessageBox.Show("Chcete opravdu ukončit aplikaci?",
                                                     "Ukončování",
