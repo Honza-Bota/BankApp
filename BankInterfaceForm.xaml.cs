@@ -22,6 +22,11 @@ namespace BankApp
         public BankInterfaceForm()
         {
             InitializeComponent();
+            foreach (AccountTypes item in Enum.GetValues(typeof(AccountTypes)))
+            {
+                cbAccountType.Items.Add(item); 
+            }
         }
     }
+
 }

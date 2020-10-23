@@ -42,11 +42,7 @@
                     <TextBox x:Name="tbName" Grid.Row="1" Grid.Column="1" Margin="10,30" FontSize="30px"/>
                     <TextBox x:Name="tbSurname" Grid.Row="2" Grid.Column="1" Margin="10,30" FontSize="30px"/>
                     <DatePicker x:Name="dtpBirthdate" Grid.Row="3" Grid.Column="1" Margin="10,30" FontSize="30px"/>
-                    <ComboBox x:Name="cbAccountType" Grid.Row="4" Grid.Column="1" Margin="10,30" FontSize="30px">
-                        <ComboBoxItem Content="Depozitní" TabIndex="1" IsSelected="True"/>
-                        <ComboBoxItem Content="Kreditní" TabIndex="2"/>
-                        <ComboBoxItem Content="Studentský" TabIndex="3"/>
-                    </ComboBox>
+                    <ComboBox x:Name="cbAccountType" Grid.Row="4" Grid.Column="1" Margin="10,30" FontSize="30px"/>
                     <TextBox x:Name="tbDeposit" Grid.Row="5" Grid.Column="1" Margin="10,30" FontSize="30px"/>
                     <DataGrid x:Name="dtgAccountsList" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="20"/>
                     <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3">
@@ -128,7 +124,7 @@
                 <Grid Background="White">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.3*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -144,16 +140,16 @@
                     <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Simulační režim" FontSize="50" FontWeight="Bold" HorizontalContentAlignment="Center" Margin="10,5"/>
                     <Label Grid.Row="1" Grid.Column="0" Content="Úrok spořícího účtu (%):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="Úrok kreditního účtu (%):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
-                    <Label Grid.Row="3" Grid.Column="0" Content="Limit spořícího účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
-                    <Label Grid.Row="4" Grid.Column="0" Content="Limit kreditního účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
-                    <Label Grid.Row="5" Grid.Column="0" Content="Limit studentského účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="Limit výběru spořícího účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
+                    <Label Grid.Row="4" Grid.Column="0" Content="Limit úvěru kreditního účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
+                    <Label Grid.Row="5" Grid.Column="0" Content="Limit výběru studentského účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="6" Grid.Column="0" Content="Násobek zrychlení času:" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="7" Grid.Column="0" Content="..." FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <TextBox x:Name="tbSettingsDebitInterest" Grid.Row="1" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsCreditInterest" Grid.Row="2" Grid.Column="1" Margin="10,10" FontSize="40px"/>
-                    <TextBox x:Name="tbSettingsDebitLimit" Grid.Row="3" Grid.Column="1" Margin="10,10" FontSize="40px"/>
+                    <TextBox x:Name="tbSettingsDebitLimitWitherdraw" Grid.Row="3" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsCreditLimit" Grid.Row="4" Grid.Column="1" Margin="10,10" FontSize="40px"/>
-                    <TextBox x:Name="tbSettingsStudentLimit" Grid.Row="5" Grid.Column="1" Margin="10,10" FontSize="40px"/>
+                    <TextBox x:Name="tbSettingsStudentLimitWitherdraw" Grid.Row="5" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsTimeMultiple" Grid.Row="6" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <Button x:Name="butSaveSettings" Content="Uložit nastavení"  FontSize="35" FontWeight="Bold" Cursor="Hand" Grid.Row="8" Grid.Column="0" Margin="10" Background="#FF1919B9" BorderBrush="{x:Null}" Foreground="#FFFBFBFB"/>
                     <Button x:Name="butSimulation" Content="Simulace"  FontSize="35" FontWeight="Bold" Cursor="Hand" Grid.Row="8" Grid.Column="1" Margin="10" Background="#FF28B919" BorderBrush="{x:Null}"/>
