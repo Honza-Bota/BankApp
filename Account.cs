@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankApp
 {
-    public abstract class Account
+    public class Account
     {
         public int AccountNumber { get; private set; }
         public string Name { get; set; }
@@ -16,7 +16,7 @@ namespace BankApp
         public int MoneyValue { get; set; }
         public List<string> TransactionLog { get; set; }
 
-        protected Account(int accountNumber, string name, string surname, DateTime birthdate, AccountTypes accounType, int moneyValue = 0)
+        public Account(int accountNumber, string name, string surname, DateTime birthdate, AccountTypes accounType, int moneyValue = 0)
         {
             AccountNumber = accountNumber;
             Name = name;
@@ -25,6 +25,7 @@ namespace BankApp
             AccounType = accounType;
             MoneyValue = moneyValue;
         }
+
 
         public void Witherdraw() { }
 

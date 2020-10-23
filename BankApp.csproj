@@ -61,7 +61,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CreditAccount.cs" />
+    <Compile Include="DebitAccount.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="StudentAccount.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BankInterfaceForm.xaml.cs">
