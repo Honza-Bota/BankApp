@@ -8,7 +8,8 @@ namespace BankApp
 {
     public abstract class Account
     {
-        public int AccountNumber { get; private set; }
+        public static int Count { get; set; } = 0;
+        public long AccountNumber { get; private set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime Birthdate { get; set; }
@@ -16,7 +17,7 @@ namespace BankApp
         public int MoneyValue { get; set; }
         public List<string> TransactionLog { get; set; }
 
-        public Account(int accountNumber, string name, string surname, DateTime birthdate, AccountTypes accountType, int moneyValue = 0)
+        public Account(long accountNumber, string name, string surname, DateTime birthdate, AccountTypes accountType, int moneyValue = 0)
         {
             AccountNumber = accountNumber;
             Name = name;
@@ -24,6 +25,8 @@ namespace BankApp
             Birthdate = birthdate;
             AccountType = accountType;
             MoneyValue = moneyValue;
+
+            Count++;
         }
 
 

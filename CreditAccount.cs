@@ -8,5 +8,8 @@ namespace BankApp
 {
     class CreditAccount : Account
     {
+        public CreditAccount(long accountNumber, string name, string surname, DateTime birthdate, AccountTypes accountType, int moneyValue = 0) : base(accountNumber, name, surname, birthdate, accountType, moneyValue)
+        {
+        }
     }
 }

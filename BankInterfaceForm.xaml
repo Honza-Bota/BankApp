@@ -51,7 +51,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="butCreate" Content="Vytvořit" Grid.Column="0" Margin="20" Background="#FF10B810" Cursor="Hand" FontSize="30" FontWeight="Bold" Foreground="Black" BorderBrush="{x:Null}"/>
+                        <Button x:Name="butCreate" Content="Vytvořit" Grid.Column="0" Margin="20" Background="#FF10B810" Cursor="Hand" FontSize="30" FontWeight="Bold" Foreground="Black" BorderBrush="{x:Null}" Click="butCreate_Click"/>
                         <Button x:Name="butDelete" Content="Smazat" Grid.Column="1" Margin="20" Background="RED" Cursor="Hand" FontSize="30" FontWeight="Bold" Foreground="Black" BorderBrush="{x:Null}"/>
                         <Button x:Name="butUpdate" Content="Uložit změny" Grid.Column="2" Margin="20" Background="#FFFFDC00" Cursor="Hand" FontSize="30" FontWeight="Bold" Foreground="Black" BorderBrush="{x:Null}"/>
                     </Grid>

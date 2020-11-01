@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace BankApp
 {
-    class DebitAccount : Account
+    class DebetAccount : Account
     {
         public int Interest { get; set; }
         public int LimitWitherdraw { get; set; }
-        public DebitAccount(int accountNumber,
+        public DebetAccount(long accountNumber,
                             string name,
                             string surname,
                             DateTime birthdate,
                             AccountTypes accountType,
                             int moneyValue = 0) : base(accountNumber, name, surname, birthdate, accountType, moneyValue)
         {
-            Interest = Settings.DebitInterest;
-            LimitWitherdraw = Settings.DebitLimitWitherdraw;
+            Interest = Settings.DebetInterest;
+            LimitWitherdraw = Settings.DebetLimitWitherdraw;
         }
     }
 }

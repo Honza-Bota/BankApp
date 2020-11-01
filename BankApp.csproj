@@ -56,13 +56,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Account.cs" />
+    <Compile Include="AccountDatabse.cs" />
     <Compile Include="AccountTypes.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CreditAccount.cs" />
-    <Compile Include="DebitAccount.cs" />
+    <Compile Include="DebetAccount.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StudentAccount.cs" />
   </ItemGroup>

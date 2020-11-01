@@ -2,7 +2,7 @@
 {
     public enum AccountTypes
     {
-        Debetní = 1,
+        Debetní,
         Kreditní,
         Studentský
     }
