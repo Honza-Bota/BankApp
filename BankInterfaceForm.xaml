@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankApp"
         mc:Ignorable="d"
-        Title="BankAPP" Height="800" Width="1200"
+        Title="BankAPP" Height="800" Width="1443"
         WindowStartupLocation="CenterScreen"
         WindowStyle="ToolWindow" FontSize="16" ResizeMode="NoResize">
     <Window.Background>
@@ -15,12 +15,12 @@
         </LinearGradientBrush>
     </Window.Background>
     <Grid>
-        <TabControl HorizontalAlignment="Center" Height="760" VerticalAlignment="Center" Width="1180" FontSize="16" Grid.ColumnSpan="2" Margin="6,5">
+        <TabControl HorizontalAlignment="Center" Height="760" VerticalAlignment="Center" Width="1417" FontSize="16" Margin="10,6">
             <TabItem Header="Správa účtů" >
-                <Grid Background="White">
+                <Grid Background="White" Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.4*"/>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="1.8*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -32,7 +32,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="ČÍslo účtu:" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Číslo účtu:" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="1" Grid.Column="0" Content="Jméno:" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="Příjmení:" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="3" Grid.Column="0" Content="Datum narození:" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
@@ -44,7 +44,7 @@
                     <DatePicker x:Name="dtpBirthdate" Grid.Row="3" Grid.Column="1" Margin="10,30" FontSize="30px"/>
                     <ComboBox x:Name="cbAccountType" Grid.Row="4" Grid.Column="1" Margin="10,30" FontSize="30px"/>
                     <TextBox x:Name="tbDeposit" Grid.Row="5" Grid.Column="1" Margin="10,30" FontSize="30px"/>
-                    <DataGrid x:Name="dtgAccountsList" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="20"/>
+                    <ListBox x:Name="lbAccountsList" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="20" FontSize="20" Cursor="Hand" SelectionChanged="lbAccountsList_SelectionChanged"/>
                     <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -63,7 +63,8 @@
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dtgAccounts" Margin="20"/>
+                    <DataGrid x:Name="dtgAccounts" Margin="20" IsReadOnly="True">
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="Transakce">

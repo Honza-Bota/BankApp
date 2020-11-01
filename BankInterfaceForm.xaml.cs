@@ -20,6 +20,8 @@ namespace BankApp
     public partial class BankInterfaceForm : Window
     {
         AccountDatabse dtbAcounts1;
+        Account account;
+
         public BankInterfaceForm()
         {
             InitializeComponent();
@@ -45,9 +47,14 @@ namespace BankApp
             if (tbAccountNumber.Text == "") tbAccountNumber.Text = Account.Count.ToString();
             long accountNumber;
             correctInputAccountNumber = long.TryParse(tbAccountNumber.Text, out accountNumber);
+            foreach (var item in dtbAcounts1)
+            {
+                if (item.Key == accountNumber) correctInputAccountNumber = false;
+            }
+            if (accountNumber < 0) correctInputAccountNumber = false;
 
-            //ověření jména, musí nějaké být
-            string name = tbName.Text;
+                //ověření jména, musí nějaké být
+                string name = tbName.Text;
             string surname = tbSurname.Text;
             if (name == "" || surname == "") correctInputNameSurname = false;
 
@@ -66,14 +73,27 @@ namespace BankApp
             //pokud je vše správně, vytvoří se příslušný účet a zapíše do "databáze"
             if (correctInputAccountNumber && correctInputNameSurname && correctInputDeposite)
             {
+                //vytvoření konkrétního účtu se zadanými údaji
                 Account newAccount = new DebetAccount(0,"","",new DateTime(),AccountTypes.Debetní);
+                Account.Count--;
 
                 if (accountType == AccountTypes.Debetní) newAccount = new DebetAccount(accountNumber,name,surname,birthdate,accountType,deposit);
                 else if (accountType == AccountTypes.Kreditní) newAccount = new CreditAccount(accountNumber, name, surname, birthdate, accountType, deposit);
                 else if (accountType == AccountTypes.Studentský) newAccount = new StudentAccount(accountNumber, name, surname, birthdate, accountType, deposit);
 
-                
+                //uložení údajů do vnitřního systému i do WPF
                 dtbAcounts1.Add(newAccount.AccountNumber,newAccount);
+
+                string newLog = $"Číslo účtu: \"{newAccount.AccountNumber,-40}\" - Jméno a příjmení: {newAccount.Name} {newAccount.Surname}";
+                lbAccountsList.Items.Add(newLog);
+
+                //vymazání zadaných hodnot
+                tbAccountNumber.Text = "";
+                tbName.Text = "";
+                tbSurname.Text = "";
+                dtpBirthdate.SelectedDate = null;
+                cbAccountType.SelectedIndex = -1;
+                tbDeposit.Text = "";
             }
             else
             {
@@ -88,6 +108,24 @@ namespace BankApp
             }
 
         }
-    }
 
+        private void lbAccountsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //získání čísla účtu podle výběru uživatele
+            string selectedItem = lbAccountsList.SelectedItem.ToString();
+            string accNumberStr = selectedItem.Split('"')[1].Trim();
+            long accountNumber = Convert.ToInt64(accNumberStr);
+
+            //nalezení daného záznamu v "databázi" a uložení do prměnné
+            dtbAcounts1.TryGetValue(accountNumber, out account);
+
+            //výpis údajů do textBoxů
+            tbAccountNumber.Text = account.AccountNumber.ToString();
+            tbName.Text = account.Name;
+            tbSurname.Text = account.Surname;
+            dtpBirthdate.SelectedDate = account.Birthdate;
+            cbAccountType.SelectedIndex = (int)account.AccountType;
+
+        }
+    }
 }
