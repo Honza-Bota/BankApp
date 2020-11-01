@@ -44,7 +44,7 @@ namespace BankApp
             bool correctInputDeposite = true;
 
             //oveření vstupu čísla, případně doplnění
-            if (tbAccountNumber.Text == "") tbAccountNumber.Text = Account.Count.ToString();
+            if (tbAccountNumber.Text == "") tbAccountNumber.Text = Account.CreatedCount.ToString();
             long accountNumber;
             correctInputAccountNumber = long.TryParse(tbAccountNumber.Text, out accountNumber);
             foreach (var item in dtbAcounts1)
@@ -75,7 +75,7 @@ namespace BankApp
             {
                 //vytvoření konkrétního účtu se zadanými údaji
                 Account newAccount = new DebetAccount(0,"","",new DateTime(),AccountTypes.Debetní);
-                Account.Count--;
+                Account.CreatedCount--;
 
                 if (accountType == AccountTypes.Debetní) newAccount = new DebetAccount(accountNumber,name,surname,birthdate,accountType,deposit);
                 else if (accountType == AccountTypes.Kreditní) newAccount = new CreditAccount(accountNumber, name, surname, birthdate, accountType, deposit);
@@ -111,20 +111,97 @@ namespace BankApp
 
         private void lbAccountsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //získání čísla účtu podle výběru uživatele
-            string selectedItem = lbAccountsList.SelectedItem.ToString();
-            string accNumberStr = selectedItem.Split('"')[1].Trim();
-            long accountNumber = Convert.ToInt64(accNumberStr);
+            try
+            {
+                //získání čísla účtu podle výběru uživatele
+                string selectedItem = lbAccountsList.SelectedItem.ToString();
+                string accNumberStr = selectedItem.Split('"')[1].Trim();
+                long accountNumber = Convert.ToInt64(accNumberStr);
 
-            //nalezení daného záznamu v "databázi" a uložení do prměnné
-            dtbAcounts1.TryGetValue(accountNumber, out account);
+                //nalezení daného záznamu v "databázi" a uložení do prměnné
+                dtbAcounts1.TryGetValue(accountNumber, out account);
 
-            //výpis údajů do textBoxů
-            tbAccountNumber.Text = account.AccountNumber.ToString();
-            tbName.Text = account.Name;
-            tbSurname.Text = account.Surname;
-            dtpBirthdate.SelectedDate = account.Birthdate;
-            cbAccountType.SelectedIndex = (int)account.AccountType;
+                //výpis údajů do textBoxů
+                tbAccountNumber.Text = account.AccountNumber.ToString();
+                tbName.Text = account.Name;
+                tbSurname.Text = account.Surname;
+                dtpBirthdate.SelectedDate = account.Birthdate;
+                cbAccountType.SelectedIndex = (int)account.AccountType;
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
+
+        private void butDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbAccountsList.SelectedIndex != -1)
+            {
+                //dotaz na smazání účtu
+                MessageBoxResult msbr = MessageBox.Show($"Opravdu si přejete smazat účet '{account.AccountNumber}' majitele '{account.Name} {account.Surname}'?",
+                    "Ověření smazání",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question,
+                    MessageBoxResult.No);
+
+                //pokud je smazání potvrzeno, vymaže záznam z "databáze" i listboxu
+                if (msbr == MessageBoxResult.Yes)
+                {
+                    dtbAcounts1.Remove(account.AccountNumber);
+                    lbAccountsList.Items.RemoveAt(lbAccountsList.SelectedIndex);
+                    MessageBox.Show($"Záznam smazán. Aktuální počet účtů je: {dtbAcounts1.Count}",
+                                    "Informace",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
+                    tbAccountNumber.Clear();
+                    tbName.Clear();
+                    tbSurname.Clear();
+                    dtpBirthdate.SelectedDate = null;
+                    cbAccountType.SelectedIndex = -1;
+                    tbDeposit.Clear();
+                }
+            }
+        }
+
+        private void butUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbAccountsList.SelectedIndex != -1)
+            {
+                //dotaz na editaci účtu
+                MessageBoxResult msbr = MessageBox.Show($"Opravdu si přejete upravit účet '{account.AccountNumber}' majitele '{account.Name} {account.Surname}'?",
+                    "Ověření úpravy",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question,
+                    MessageBoxResult.No);
+
+                //pokud je úprava potvrzena, vymaže záznam z "databáze" a nahradí novým
+                if (msbr == MessageBoxResult.Yes)
+                {
+
+                    string name = tbName.Text;
+                    string surname = tbSurname.Text;
+                    DateTime birthdate = dtpBirthdate.DisplayDate;
+                    if (name != "" && surname != "" && birthdate != null)
+                    {
+                        account.Name = name;
+                        account.Surname = surname;
+                        account.Birthdate = birthdate;
+
+                        dtbAcounts1.Remove(account.AccountNumber);
+                        lbAccountsList.Items.Remove(lbAccountsList.SelectedItem);
+                        dtbAcounts1.Add(account.AccountNumber, account);
+                        string newLog = $"Číslo účtu: \"{account.AccountNumber,-40}\" - Jméno a příjmení: {account.Name} {account.Surname}";
+                        lbAccountsList.Items.Add(newLog);
+
+                    }
+                }
+            }
+        }
+
+        private void dtgAccountsUpdate()
+        {
 
         }
     }

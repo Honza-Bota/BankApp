@@ -8,7 +8,7 @@ namespace BankApp
 {
     public abstract class Account
     {
-        public static int Count { get; set; } = 0;
+        public static int CreatedCount { get; set; } = 0;
         public long AccountNumber { get; private set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -26,7 +26,7 @@ namespace BankApp
             AccountType = accountType;
             MoneyValue = moneyValue;
 
-            Count++;
+            CreatedCount++;
         }
 
 
