@@ -43,7 +43,7 @@ namespace BankApp
             timer.Interval = TimeSpan.FromSeconds(1 * Settings.TimeMultiple);
 
             //vytvoření rozhraní datagridu
-            LoadDtgAccounts();
+            //LoadDtgAccounts();
 
             //načtení hodnot nastavení do textboxů
             LoadSettings();
@@ -108,7 +108,8 @@ namespace BankApp
                 cbAccountType.SelectedIndex = -1;
                 tbDeposit.Text = "";
 
-                dtgAccountsUpdate();
+                //dtgAccountsUpdate();
+                lbAccountsUpdate();
             }
             else
             {
@@ -176,7 +177,8 @@ namespace BankApp
                     dtpBirthdate.SelectedDate = null;
                     cbAccountType.SelectedIndex = -1;
                     tbDeposit.Clear();
-                    dtgAccountsUpdate();
+                    //dtgAccountsUpdate();
+                    lbAccountsUpdate();
                 }
             }
         }
@@ -210,12 +212,14 @@ namespace BankApp
                         dtbAcounts1.Add(account.AccountNumber, account);
                         string newLog = $"Číslo účtu: \"{account.AccountNumber,-40}\" - Jméno a příjmení: {account.Name} {account.Surname}";
                         lbAccountsList.Items.Add(newLog);
-                        dtgAccountsUpdate();
+                        //dtgAccountsUpdate();
+                        lbAccountsUpdate();
                     }
                 }
             }
         }
 
+        /* Obslužné metody bro datagrid Accounts
         private void dtgAccountsUpdate()
         {
             //vyčistí datagrid
@@ -257,6 +261,18 @@ namespace BankApp
             col6.Header = "Zůstatek";
 
             dtgAccountsUpdate();
+        }
+        */
+
+        private void lbAccountsUpdate()
+        {
+            //smaže listbox
+            lbAccounts.Items.Clear();
+
+            foreach (var item in dtbAcounts1)
+            {
+                lbAccounts.Items.Add(item.Value);
+            }
         }
 
         private void LoadSettings()

@@ -29,6 +29,15 @@ namespace BankApp
             CreatedCount++;
         }
 
+        public override string ToString()
+        {
+            return $"~ Číslo účtu: {AccountNumber,2}; " +
+                $"Jméno a příjmení: {Name,2} {Surname,0}; " +
+                $"Datum narození: {Birthdate.ToShortDateString(),2}; " +
+                $"Typ účtu: {AccountType,2}; " +
+                $"Finance: {MoneyValue,2} Kč";
+        }
+
 
         public virtual void Witherdraw() { }
 

@@ -57,13 +57,18 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Přehled účtů" IsEnabled="False">
+            <TabItem Header="Přehled účtů">
                 <Grid Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="131*"/>
+                        <ColumnDefinition Width="1280*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dtgAccounts" Margin="20" IsReadOnly="True" ColumnWidth="*"/>
+                    <!--<DataGrid x:Name="dtgAccounts" Margin="20" IsReadOnly="True" ColumnWidth="*"/>-->
+                    <ListBox x:Name="lbAccounts" Margin="20" Grid.ColumnSpan="2" FontFamily="Consolas"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Transakce">
