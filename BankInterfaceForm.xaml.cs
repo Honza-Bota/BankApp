@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace BankApp
 {
@@ -21,6 +23,7 @@ namespace BankApp
     {
         AccountDatabse dtbAcounts1;
         Account account;
+        DispatcherTimer timer;
 
         public BankInterfaceForm()
         {
@@ -29,11 +32,21 @@ namespace BankApp
             //naplnění comboboxu
             foreach (AccountTypes item in Enum.GetValues(typeof(AccountTypes)))
             {
-                cbAccountType.Items.Add(item); 
+                cbAccountType.Items.Add(item);
             }
-            
+
             //inicializace "databáze"
             dtbAcounts1 = new AccountDatabse();
+
+            //inicializace timeru
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1 * Settings.TimeMultiple);
+
+            //vytvoření rozhraní datagridu
+            LoadDtgAccounts();
+
+            //načtení hodnot nastavení do textboxů
+            LoadSettings();
         }
 
         private void butCreate_Click(object sender, RoutedEventArgs e)
@@ -53,8 +66,8 @@ namespace BankApp
             }
             if (accountNumber < 0) correctInputAccountNumber = false;
 
-                //ověření jména, musí nějaké být
-                string name = tbName.Text;
+            //ověření jména, musí nějaké být
+            string name = tbName.Text;
             string surname = tbSurname.Text;
             if (name == "" || surname == "") correctInputNameSurname = false;
 
@@ -74,15 +87,15 @@ namespace BankApp
             if (correctInputAccountNumber && correctInputNameSurname && correctInputDeposite)
             {
                 //vytvoření konkrétního účtu se zadanými údaji
-                Account newAccount = new DebetAccount(0,"","",new DateTime(),AccountTypes.Debetní);
+                Account newAccount = new DebetAccount(0, "", "", new DateTime(), AccountTypes.Debetní);
                 Account.CreatedCount--;
 
-                if (accountType == AccountTypes.Debetní) newAccount = new DebetAccount(accountNumber,name,surname,birthdate,accountType,deposit);
+                if (accountType == AccountTypes.Debetní) newAccount = new DebetAccount(accountNumber, name, surname, birthdate, accountType, deposit);
                 else if (accountType == AccountTypes.Kreditní) newAccount = new CreditAccount(accountNumber, name, surname, birthdate, accountType, deposit);
                 else if (accountType == AccountTypes.Studentský) newAccount = new StudentAccount(accountNumber, name, surname, birthdate, accountType, deposit);
 
                 //uložení údajů do vnitřního systému i do WPF
-                dtbAcounts1.Add(newAccount.AccountNumber,newAccount);
+                dtbAcounts1.Add(newAccount.AccountNumber, newAccount);
 
                 string newLog = $"Číslo účtu: \"{newAccount.AccountNumber,-40}\" - Jméno a příjmení: {newAccount.Name} {newAccount.Surname}";
                 lbAccountsList.Items.Add(newLog);
@@ -94,15 +107,17 @@ namespace BankApp
                 dtpBirthdate.SelectedDate = null;
                 cbAccountType.SelectedIndex = -1;
                 tbDeposit.Text = "";
+
+                dtgAccountsUpdate();
             }
             else
             {
                 //pokud dojde k vyplnění špatných hodnot, vyvolán messageBox s chybami
                 string err = $@"Přehled chybně zadaných údajů:
 
-- Číslo účtu: {(correctInputAccountNumber == false ? "Chyba" : "Správně"), 5}
-- Jméno a příjmení: {(correctInputNameSurname == false ? "Chyba" : "Správně"), 5}
-- Počáteční vklad: {(correctInputDeposite == false ? "Chyba" : "Správně"), 5}
+- Číslo účtu: {(correctInputAccountNumber == false ? "Chyba" : "Správně"),5}
+- Jméno a příjmení: {(correctInputNameSurname == false ? "Chyba" : "Správně"),5}
+- Počáteční vklad: {(correctInputDeposite == false ? "Chyba" : "Správně"),5}
 ";
                 MessageBox.Show(err, "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
             }
@@ -161,6 +176,7 @@ namespace BankApp
                     dtpBirthdate.SelectedDate = null;
                     cbAccountType.SelectedIndex = -1;
                     tbDeposit.Clear();
+                    dtgAccountsUpdate();
                 }
             }
         }
@@ -194,7 +210,7 @@ namespace BankApp
                         dtbAcounts1.Add(account.AccountNumber, account);
                         string newLog = $"Číslo účtu: \"{account.AccountNumber,-40}\" - Jméno a příjmení: {account.Name} {account.Surname}";
                         lbAccountsList.Items.Add(newLog);
-
+                        dtgAccountsUpdate();
                     }
                 }
             }
@@ -202,7 +218,94 @@ namespace BankApp
 
         private void dtgAccountsUpdate()
         {
+            //vyčistí datagrid
+            dtgAccounts.Items.Clear();
 
+            //naplnění datagridu hodnotami z "databáze"
+            foreach (var item in dtbAcounts1)
+            {
+                dtgAccounts.Items.Add(item);
+            }
+        }
+
+        private void LoadDtgAccounts()
+        {
+            //vytvoření rozhraní datagridu účtů
+            DataGridTextColumn col1 = new DataGridTextColumn();
+            DataGridTextColumn col2 = new DataGridTextColumn();
+            DataGridTextColumn col3 = new DataGridTextColumn();
+            DataGridTextColumn col4 = new DataGridTextColumn();
+            DataGridTextColumn col5 = new DataGridTextColumn();
+            DataGridTextColumn col6 = new DataGridTextColumn();
+            dtgAccounts.Columns.Add(col1);
+            dtgAccounts.Columns.Add(col2);
+            dtgAccounts.Columns.Add(col3);
+            dtgAccounts.Columns.Add(col4);
+            dtgAccounts.Columns.Add(col5);
+            dtgAccounts.Columns.Add(col6);
+            col1.Binding = new Binding("accountNumber");
+            col2.Binding = new Binding("name");
+            col3.Binding = new Binding("surname");
+            col4.Binding = new Binding("birthdate");
+            col5.Binding = new Binding("accountType");
+            col6.Binding = new Binding("money");
+            col1.Header = "Číslo účtu";
+            col2.Header = "Jméno";
+            col3.Header = "Příjmení";
+            col4.Header = "Datum narození";
+            col5.Header = "Typ účtu";
+            col6.Header = "Zůstatek";
+
+            dtgAccountsUpdate();
+        }
+
+        private void LoadSettings()
+        {
+            //načtení údajů z vlastností do textboxů
+            tbSettingsDebitInterest.Text = Settings.DebetInterest.ToString();
+            tbSettingsCreditInterest.Text = Settings.CreditInterest.ToString();
+            tbSettingsDebitLimitWitherdraw.Text = Settings.DebetLimitWitherdraw.ToString();
+            tbSettingsCreditLimit.Text = Settings.CreditLimit.ToString();
+            tbSettingsStudentLimitWitherdraw.Text = Settings.StudentLimitWitherdraw.ToString();
+            tbSettingsTimeMultiple.Text = Settings.TimeMultiple.ToString();
+        }
+
+        private void butSaveSettings_Click(object sender, RoutedEventArgs e)
+        {
+            //uložení hodnot z textboxů do vnitřních promněných
+
+            //promněná kontrolující korektnost vstupů
+            bool cI1, cI2, cI3, cI4, cI5, cI6;
+            cI1 = cI2 = cI3 = cI4 = cI5 = cI6 = true;
+
+            //promněné pro uložení převedených hodnot
+            int debetInterest;
+            int creditInterest;
+            int debetLimitWitherdraw;
+            int creditLimit;
+            int studentLimitWitherdraw;
+            int timeMultiple;
+
+            //kontrola a konverze zadaných hodnot
+            cI1 = int.TryParse(tbSettingsDebitInterest.Text, out debetInterest);
+            cI2 = int.TryParse(tbSettingsCreditInterest.Text, out creditInterest);
+            cI3 = int.TryParse(tbSettingsDebitLimitWitherdraw.Text, out debetLimitWitherdraw);
+            cI4 = int.TryParse(tbSettingsCreditLimit.Text, out creditLimit);
+            cI5 = int.TryParse(tbSettingsStudentLimitWitherdraw.Text, out studentLimitWitherdraw);
+            cI6 = int.TryParse(tbSettingsTimeMultiple.Text, out timeMultiple);
+
+            //nahrání nových hodnot do promněné nastavení
+            if(cI1 && cI2 && cI3 && cI4 && cI5 && cI6)
+            {
+                Settings.DebetInterest = debetInterest;
+                Settings.CreditInterest = creditInterest;
+                Settings.DebetLimitWitherdraw = debetLimitWitherdraw;
+                Settings.CreditLimit = creditLimit;
+                Settings.StudentLimitWitherdraw = studentLimitWitherdraw;
+                Settings.TimeMultiple = timeMultiple;
+
+                MessageBox.Show("Hodnoty uloženy.");
+            }
         }
     }
 }

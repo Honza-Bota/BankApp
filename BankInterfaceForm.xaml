@@ -57,14 +57,13 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Přehled účtů">
+            <TabItem Header="Přehled účtů" IsEnabled="False">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dtgAccounts" Margin="20" IsReadOnly="True">
-                    </DataGrid>
+                    <DataGrid x:Name="dtgAccounts" Margin="20" IsReadOnly="True" ColumnWidth="*"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Transakce">
@@ -146,13 +145,13 @@
                     <Label Grid.Row="5" Grid.Column="0" Content="Limit výběru studentského účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="6" Grid.Column="0" Content="Násobek zrychlení času:" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="7" Grid.Column="0" Content="..." FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
-                    <TextBox x:Name="tbSettingsDebitInterest" Grid.Row="1" Grid.Column="1" Margin="10,10" FontSize="40px"/>
+                    <TextBox x:Name="tbSettingsDebitInterest"  Grid.Row="1" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsCreditInterest" Grid.Row="2" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsDebitLimitWitherdraw" Grid.Row="3" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsCreditLimit" Grid.Row="4" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsStudentLimitWitherdraw" Grid.Row="5" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsTimeMultiple" Grid.Row="6" Grid.Column="1" Margin="10,10" FontSize="40px"/>
-                    <Button x:Name="butSaveSettings" Content="Uložit nastavení"  FontSize="35" FontWeight="Bold" Cursor="Hand" Grid.Row="8" Grid.Column="0" Margin="10" Background="#FF1919B9" BorderBrush="{x:Null}" Foreground="#FFFBFBFB"/>
+                    <Button x:Name="butSaveSettings" Content="Uložit nastavení"  FontSize="35" FontWeight="Bold" Cursor="Hand" Grid.Row="8" Grid.Column="0" Margin="10" Background="#FF1919B9" BorderBrush="{x:Null}" Foreground="#FFFBFBFB" Click="butSaveSettings_Click"/>
                     <Button x:Name="butSimulation" Content="Simulace"  FontSize="35" FontWeight="Bold" Cursor="Hand" Grid.Row="8" Grid.Column="1" Margin="10" Background="#FF28B919" BorderBrush="{x:Null}"/>
                 </Grid>
             </TabItem>
