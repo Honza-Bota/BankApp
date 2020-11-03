@@ -97,7 +97,7 @@
                             <TextBox x:Name="tbDepositAccountNumber" Grid.Row="1" Grid.Column="1" Margin="20,30" FontSize="30" VerticalContentAlignment="Center" />
                             <TextBox x:Name="tbDepositAmount" Grid.Row="2" Grid.Column="1" Margin="20,30" FontSize="30" VerticalContentAlignment="Center" />
                             <TextBox x:Name="tbDepositMessage" Grid.Row="3" Grid.Column="1" Margin="20,30" FontSize="30" VerticalContentAlignment="Center" />
-                            <Button x:Name="butDeposit" Content="Vložit"  FontSize="40" FontWeight="Bold" Cursor="Hand" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Margin="20" Background="#FF28B919" BorderBrush="{x:Null}"/>
+                            <Button x:Name="butDeposit" Content="Vložit"  FontSize="40" FontWeight="Bold" Cursor="Hand" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Margin="20" Background="#FF28B919" BorderBrush="{x:Null}" Click="butDeposit_Click"/>
                         </Grid>
                     </Border>
                     <Border Grid.Column="1" BorderThickness="1" BorderBrush="Black"  >
@@ -117,10 +117,10 @@
                             <Label Grid.Row="1" Grid.Column="0" Content="Číslo účtu:" FontSize="30" VerticalContentAlignment="Center" Margin="20,30"/>
                             <Label Grid.Row="2" Grid.Column="0" Content="Částka:" FontSize="30" VerticalContentAlignment="Center" Margin="20,30"/>
                             <Label Grid.Row="3" Grid.Column="0" Content="Zpráva:" FontSize="30" VerticalContentAlignment="Center" Margin="20,30"/>
-                            <TextBox x:Name="tbWithdrawaAccountNumber" Grid.Row="1" Grid.Column="1" Margin="20,30" FontSize="30" VerticalContentAlignment="Center" />
-                            <TextBox x:Name="tbWithdrawaAmount" Grid.Row="2" Grid.Column="1" Margin="20,30" FontSize="30" VerticalContentAlignment="Center" />
-                            <TextBox x:Name="tbWithdrawaMessage" Grid.Row="3" Grid.Column="1" Margin="20,30" FontSize="30" VerticalContentAlignment="Center" />
-                            <Button x:Name="butWithdrawa" Content="Vybrat"  FontSize="40" FontWeight="Bold" Cursor="Hand" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Margin="20" Background="#FFF98D0C" BorderBrush="{x:Null}"/>
+                            <TextBox x:Name="tbWithdrawAccountNumber" Grid.Row="1" Grid.Column="1" Margin="20,30" FontSize="30" VerticalContentAlignment="Center" />
+                            <TextBox x:Name="tbWithdrawAmount" Grid.Row="2" Grid.Column="1" Margin="20,30" FontSize="30" VerticalContentAlignment="Center" />
+                            <TextBox x:Name="tbWithdrawMessage" Grid.Row="3" Grid.Column="1" Margin="20,30" FontSize="30" VerticalContentAlignment="Center" />
+                            <Button x:Name="butWithdrawa" Content="Vybrat"  FontSize="40" FontWeight="Bold" Cursor="Hand" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Margin="20" Background="#FFF98D0C" BorderBrush="{x:Null}" Click="butWithdrawa_Click"/>
                         </Grid>
                     </Border>
                 </Grid>

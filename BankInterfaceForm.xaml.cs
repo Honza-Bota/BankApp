@@ -40,7 +40,7 @@ namespace BankApp
 
             //inicializace timeru
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1 * Settings.TimeMultiple);
+            timer.Interval = TimeSpan.FromDays(1 * Settings.TimeMultiple);
 
             //vytvoření rozhraní datagridu
             //LoadDtgAccounts();
@@ -269,6 +269,7 @@ namespace BankApp
             //smaže listbox
             lbAccounts.Items.Clear();
 
+            //nahraje všechny záznamy v "databázi" do listboxu
             foreach (var item in dtbAcounts1)
             {
                 lbAccounts.Items.Add(item.Value);
@@ -321,6 +322,119 @@ namespace BankApp
                 Settings.TimeMultiple = timeMultiple;
 
                 MessageBox.Show("Hodnoty uloženy.");
+            }
+        }
+
+        private void butDeposit_Click(object sender, RoutedEventArgs e)
+        {
+            Account selectedAccount;
+
+            //načtení hodnot ze vstupů
+            string _accNumber = tbDepositAccountNumber.Text;
+            string _amount = tbDepositAmount.Text;
+
+            //promněné s údajemi o vkladu
+            string message = tbDepositMessage.Text;
+            long accNumber;
+            int amount;
+
+            //kontrola a konverze zadaných hodnot
+            if (!long.TryParse(_accNumber, out accNumber)) MessageBox.Show("Bylo zadáno číslo účtu v nesprávném formátu!");
+            if (!int.TryParse(_amount, out amount)) MessageBox.Show("Vklad byl zadán v nesprávném formátu!");
+
+            //kontrola existence účtu
+            bool accExist = false;
+            foreach (var item in dtbAcounts1)
+            {
+                if (item.Key == accNumber) accExist = true;
+            }
+            if (!accExist)
+            {
+                MessageBox.Show("Tento účet neexistuje!");
+                return;
+            }
+
+            //nalezení účtu a provedení operace
+            foreach (var item in dtbAcounts1)
+            {
+                if (item.Key == accNumber)
+                {
+                    selectedAccount = item.Value;
+                    bool inserted = selectedAccount.Deposit(amount, message); 
+                    //selectedAccount.ShowLog();
+                    if (inserted)
+                    {
+                        MessageBox.Show($"Částka '{amount}' byla vložena na účet '{accNumber}'."); 
+                        selectedAccount = null;
+                        lbAccountsUpdate();
+                        tbDepositAccountNumber.Clear();
+                        tbDepositAmount.Clear();
+                        tbDepositMessage.Clear();
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Částka '{amount}' nebyla vložena na účet '{accNumber}'.");
+                        selectedAccount = null;
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void butWithdrawa_Click(object sender, RoutedEventArgs e)
+        {
+            Account selectedAccount;
+
+            //načtení hodnot ze vstupů
+            string _accNumber = tbWithdrawAccountNumber.Text;
+            string _amount = tbWithdrawAmount.Text;
+
+            //promněné s údajemi o vkladu
+            string message = tbWithdrawMessage.Text;
+            long accNumber;
+            int amount;
+
+            //kontrola a konverze zadaných hodnot
+            if (!long.TryParse(_accNumber, out accNumber)) MessageBox.Show("Bylo zadáno číslo účtu v nesprávném formátu!");
+            if (!int.TryParse(_amount, out amount)) MessageBox.Show("Výběr byl zadán v nesprávném formátu!");
+
+            //kontrola existence účtu
+            bool accExist = false;
+            foreach (var item in dtbAcounts1)
+            {
+                if (item.Key == accNumber) accExist = true;
+            }
+            if (!accExist)
+            {
+                MessageBox.Show("Tento účet neexistuje!");
+                return;
+            }
+
+            //nalezení účtu a provedení operace
+            foreach (var item in dtbAcounts1)
+            {
+                if (item.Key == accNumber)
+                {
+                    selectedAccount = item.Value;
+                    bool witherdrawed = selectedAccount.Witherdraw(amount, message);
+                    if (witherdrawed)
+                    {
+                        MessageBox.Show($"Částka '{amount}' byla vybrána z účtu '{accNumber}'.");
+                        selectedAccount = null;
+                        lbAccountsUpdate();
+                        tbWithdrawAccountNumber.Clear();
+                        tbWithdrawAmount.Clear();
+                        tbWithdrawMessage.Clear();
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Částka '{amount}' nebyla vybrána z účtu '{accNumber}'.");
+                        selectedAccount = null;
+                        return;
+                    }
+                }
             }
         }
     }

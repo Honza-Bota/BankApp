@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BankApp
 {
@@ -27,6 +28,7 @@ namespace BankApp
             MoneyValue = moneyValue;
 
             CreatedCount++;
+            TransactionLog = new List<string>();
         }
 
         public override string ToString()
@@ -39,11 +41,20 @@ namespace BankApp
         }
 
 
-        public virtual void Witherdraw() { }
+        public virtual bool Witherdraw(int amount, string message) { return false; }
 
-        public virtual void Deposit() { }
+        public virtual bool Deposit(int amount, string message) { return false; }
 
-        protected virtual void LogTransaction() { }
+        protected virtual void LogTransaction(string log) => TransactionLog.Add(log);
 
+        public void ShowLog()
+        {
+            string data = $"Záznamy: \n";
+            foreach (var item in TransactionLog)
+            {
+                data += $"~ {item}\n";
+            }
+            MessageBox.Show(data);
+        }
     }
 }

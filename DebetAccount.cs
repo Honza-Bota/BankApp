@@ -8,8 +8,6 @@ namespace BankApp
 {
     class DebetAccount : Account
     {
-        public int Interest { get; set; }
-        public int LimitWitherdraw { get; set; }
         public DebetAccount(long accountNumber,
                             string name,
                             string surname,
@@ -17,8 +15,43 @@ namespace BankApp
                             AccountTypes accountType,
                             int moneyValue = 0) : base(accountNumber, name, surname, birthdate, accountType, moneyValue)
         {
-            Interest = Settings.DebetInterest;
-            LimitWitherdraw = Settings.DebetLimitWitherdraw;
+        
+        }
+
+        public override bool Deposit(int amount, string message)
+        {
+            bool inserted = false;
+
+            if (amount > 0)
+            {
+                MoneyValue += amount;
+                LogTransaction($"Vložena částka {amount} se zprávou {message}");
+                inserted = true;
+            }
+            else
+            {
+                inserted = false;
+            }
+
+            return inserted;
+        }
+
+        public override bool Witherdraw(int amount, string message)
+        {
+            bool witherdrawed = false;
+
+            if (amount > 0 && amount <= Settings.DebetLimitWitherdraw && amount < MoneyValue)
+            {
+                MoneyValue -= amount;
+                LogTransaction($"Vybrána částka {amount} se zprávou {message}");
+                witherdrawed = true;
+            }
+            else
+            {
+                witherdrawed = false;
+            }
+
+            return witherdrawed;
         }
     }
 }
