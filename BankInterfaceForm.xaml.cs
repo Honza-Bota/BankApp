@@ -21,6 +21,7 @@ namespace BankApp
     /// </summary>
     public partial class BankInterfaceForm : Window
     {
+        //provozní pormněnné
         AccountDatabse dtbAcounts1;
         Account account;
         DateTime date;
@@ -59,6 +60,7 @@ namespace BankApp
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            //virtuální čas
             date = date.AddDays(1);
             nextMonth = date.Month;
             if (currentMonth != nextMonth) NewMonth();
@@ -68,6 +70,7 @@ namespace BankApp
 
         private void NewMonth()
         {
+            //detekce nového měsíce pro výpočet úroku
             foreach (var item in dtbAcounts1)
             {
                 item.Value.MakeInterest();
@@ -161,7 +164,7 @@ namespace BankApp
                 string accNumberStr = selectedItem.Split('"')[1].Trim();
                 long accountNumber = Convert.ToInt64(accNumberStr);
 
-                //nalezení daného záznamu v "databázi" a uložení do prměnné
+                //nalezení daného záznamu v "databázi" a uložení do proměnné
                 dtbAcounts1.TryGetValue(accountNumber, out account);
 
                 //výpis údajů do textBoxů
@@ -467,11 +470,14 @@ namespace BankApp
 
         private void butSimulation_Click(object sender, RoutedEventArgs e)
         {
+            //nastavení intervalu timeru podle hodnoty v settings
             timer.Interval = TimeSpan.FromSeconds(Settings.TimeInterval);
 
+            //přepínač pro zapnutí nebo vypnutí simualce
             if (!simulationOn) simulationOn = true;
             else simulationOn = false;
 
+            //spuštění timeru a signalizace na pozadí tlačítka
             if (simulationOn)
             {
                 timer.Start();
@@ -486,6 +492,7 @@ namespace BankApp
 
         private void cbAccountType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //zrušení možnosti vložit vstupní vkald na kreditní učet
             if (cbAccountType.SelectedIndex == 1)
             {
                 tbDeposit.IsEnabled = false;

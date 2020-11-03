@@ -9,6 +9,8 @@ namespace BankApp
 {
     public abstract class Account
     {
+     
+        //základní vlastnosti účtu
         public static int CreatedCount { get; set; } = 0;
         public long AccountNumber { get; private set; }
         public string Name { get; set; }
