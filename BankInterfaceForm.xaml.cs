@@ -42,6 +42,7 @@ namespace BankApp
 
             //inicializace "databáze"
             dtbAcounts1 = new AccountDatabse();
+            dtbAcounts1.Load();
 
             //inicializace timeru a data
             timer = new DispatcherTimer();
@@ -499,6 +500,24 @@ namespace BankApp
                 tbDeposit.Clear();
             }
             else tbDeposit.IsEnabled = true;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult rslt = MessageBox.Show("Chcete opravdu ukončit aplikaci?",
+                                                    "Ukončování",
+                                                    MessageBoxButton.YesNo,
+                                                    MessageBoxImage.Question,
+                                                    MessageBoxResult.No);
+
+            if (rslt == MessageBoxResult.Yes)
+            {
+                dtbAcounts1.Save();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
