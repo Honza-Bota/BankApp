@@ -23,6 +23,7 @@ namespace BankApp
     {
         AccountDatabse dtbAcounts1;
         Account account;
+        DateTime date;
         DispatcherTimer timer;
 
         public BankInterfaceForm()
@@ -38,9 +39,10 @@ namespace BankApp
             //inicializace "databáze"
             dtbAcounts1 = new AccountDatabse();
 
-            //inicializace timeru
+            //inicializace timeru a data
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromDays(1 * Settings.TimeMultiple);
+            date = DateTime.Today;
 
             //vytvoření rozhraní datagridu
             //LoadDtgAccounts();
