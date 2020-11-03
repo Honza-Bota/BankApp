@@ -56,5 +56,9 @@ namespace BankApp
             }
             MessageBox.Show(data);
         }
+
+        public virtual void MakeInterest()
+        {
+        }
     }
 }

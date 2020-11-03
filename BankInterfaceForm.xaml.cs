@@ -25,6 +25,9 @@ namespace BankApp
         Account account;
         DateTime date;
         DispatcherTimer timer;
+        bool simulationOn;
+        int currentMonth;
+        int nextMonth;
 
         public BankInterfaceForm()
         {
@@ -41,14 +44,35 @@ namespace BankApp
 
             //inicializace timeru a data
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromDays(1 * Settings.TimeMultiple);
+            timer.Interval = TimeSpan.FromSeconds(1 * (1 / Settings.TimeMultiple));
+            timer.Tick += Timer_Tick;
             date = DateTime.Today;
+            currentMonth = date.Month;
+            simulationOn = false;
 
             //vytvoření rozhraní datagridu
             //LoadDtgAccounts();
 
             //načtení hodnot nastavení do textboxů
             LoadSettings();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            date = date.AddDays(1);
+            nextMonth = date.Month;
+            if (currentMonth != nextMonth) NewMonth();
+            currentMonth = nextMonth;
+            lblTime.Content = "Aktuální datum: " + date.ToShortDateString();
+        }
+
+        private void NewMonth()
+        {
+            foreach (var item in dtbAcounts1)
+            {
+                item.Value.MakeInterest();
+            }
+            MessageBox.Show("Proběhlo měsíční úročení!");
         }
 
         private void butCreate_Click(object sender, RoutedEventArgs e)
@@ -438,6 +462,25 @@ namespace BankApp
                     }
                 }
             }
+        }
+
+        private void butSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            timer.Interval = TimeSpan.FromSeconds(1 * (1/Settings.TimeMultiple));
+
+            if (!simulationOn) simulationOn = true;
+            else simulationOn = false;
+
+            if (simulationOn)
+            {
+                timer.Start();
+                butSimulation.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            }
+            else
+            {
+                timer.Stop();
+                butSimulation.Background = new SolidColorBrush(Color.FromRgb(40, 185, 25));
+            }            
         }
     }
 }

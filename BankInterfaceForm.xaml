@@ -156,8 +156,9 @@
                     <TextBox x:Name="tbSettingsCreditLimit" Grid.Row="4" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsStudentLimitWitherdraw" Grid.Row="5" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsTimeMultiple" Grid.Row="6" Grid.Column="1" Margin="10,10" FontSize="40px"/>
+                    <Label x:Name="lblTime" Content="Aktuální datum:" Grid.Row="7" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <Button x:Name="butSaveSettings" Content="Uložit nastavení"  FontSize="35" FontWeight="Bold" Cursor="Hand" Grid.Row="8" Grid.Column="0" Margin="10" Background="#FF1919B9" BorderBrush="{x:Null}" Foreground="#FFFBFBFB" Click="butSaveSettings_Click"/>
-                    <Button x:Name="butSimulation" Content="Simulace"  FontSize="35" FontWeight="Bold" Cursor="Hand" Grid.Row="8" Grid.Column="1" Margin="10" Background="#FF28B919" BorderBrush="{x:Null}"/>
+                    <Button x:Name="butSimulation" Content="Simulace"  FontSize="35" FontWeight="Bold" Cursor="Hand" Grid.Row="8" Grid.Column="1" Margin="10" Background="#FF28B919" BorderBrush="{x:Null}" Click="butSimulation_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
