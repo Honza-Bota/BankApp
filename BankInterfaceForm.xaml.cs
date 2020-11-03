@@ -43,6 +43,8 @@ namespace BankApp
             //inicializace "databáze"
             dtbAcounts1 = new AccountDatabse();
             dtbAcounts1.Load();
+            lbAccountsUpdate();
+            lbAccountsListUpdate();
 
             //inicializace timeru a data
             timer = new DispatcherTimer();
@@ -128,8 +130,10 @@ namespace BankApp
                 //uložení údajů do vnitřního systému i do WPF
                 dtbAcounts1.Add(newAccount.AccountNumber, newAccount);
 
-                string newLog = $"Číslo účtu: \"{newAccount.AccountNumber,-40}\" - Jméno a příjmení: {newAccount.Name} {newAccount.Surname}";
-                lbAccountsList.Items.Add(newLog);
+                //string newLog = $"Číslo účtu: \"{newAccount.AccountNumber,-40}\" - Jméno a příjmení: {newAccount.Name} {newAccount.Surname}";
+                //lbAccountsList.Items.Add(newLog);
+                lbAccountsListUpdate();
+
 
                 //vymazání zadaných hodnot
                 tbAccountNumber.Text = "";
@@ -304,6 +308,18 @@ namespace BankApp
             foreach (var item in dtbAcounts1)
             {
                 lbAccounts.Items.Add(item.Value);
+            }
+        }
+
+        private void lbAccountsListUpdate()
+        {
+            //smaže listbox
+            lbAccountsList.Items.Clear();
+
+            //nahraje všechny záznamy v "databázi" do listboxu
+            foreach (var item in dtbAcounts1)
+            {
+                lbAccountsList.Items.Add($"Číslo účtu: \"{item.Value.AccountNumber,-40}\" - Jméno a příjmení: {item.Value.Name} {item.Value.Surname}");
             }
         }
 
