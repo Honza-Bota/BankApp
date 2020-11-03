@@ -13,7 +13,7 @@ namespace BankApp
                              string surname,
                              DateTime birthdate,
                              AccountTypes accountType,
-                             int moneyValue = 0) : base(accountNumber, name, surname, birthdate, accountType, moneyValue)
+                             double moneyValue = 0) : base(accountNumber, name, surname, birthdate, accountType, moneyValue)
         {
         }
 
@@ -51,6 +51,14 @@ namespace BankApp
             }
 
             return witherdrawed;
+        }
+
+        public override void MakeInterest()
+        {
+            if (MoneyValue > (Settings.CreditLimit * -1) - 25_000)
+            {
+                MoneyValue += ((MoneyValue / 100) * Settings.CreditInterest) / 12; 
+            }
         }
     }
 }

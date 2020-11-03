@@ -15,10 +15,10 @@ namespace BankApp
         public string Surname { get; set; }
         public DateTime Birthdate { get; set; }
         public AccountTypes AccountType { get; private set; }
-        public int MoneyValue { get; set; }
+        public double MoneyValue { get; set; }
         public List<string> TransactionLog { get; set; }
 
-        public Account(long accountNumber, string name, string surname, DateTime birthdate, AccountTypes accountType, int moneyValue = 0)
+        public Account(long accountNumber, string name, string surname, DateTime birthdate, AccountTypes accountType, double moneyValue = 0)
         {
             AccountNumber = accountNumber;
             Name = name;

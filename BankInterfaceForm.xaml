@@ -42,7 +42,7 @@
                     <TextBox x:Name="tbName" Grid.Row="1" Grid.Column="1" Margin="10,30" FontSize="30px"/>
                     <TextBox x:Name="tbSurname" Grid.Row="2" Grid.Column="1" Margin="10,30" FontSize="30px"/>
                     <DatePicker x:Name="dtpBirthdate" Grid.Row="3" Grid.Column="1" Margin="10,30" FontSize="30px"/>
-                    <ComboBox x:Name="cbAccountType" Grid.Row="4" Grid.Column="1" Margin="10,30" FontSize="30px"/>
+                    <ComboBox x:Name="cbAccountType" Grid.Row="4" Grid.Column="1" Margin="10,30" FontSize="30px" SelectionChanged="cbAccountType_SelectionChanged"/>
                     <TextBox x:Name="tbDeposit" Grid.Row="5" Grid.Column="1" Margin="10,30" FontSize="30px"/>
                     <ListBox x:Name="lbAccountsList" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="20" FontSize="20" Cursor="Hand" SelectionChanged="lbAccountsList_SelectionChanged"/>
                     <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3">
@@ -148,7 +148,7 @@
                     <Label Grid.Row="3" Grid.Column="0" Content="Limit výběru spořícího účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="4" Grid.Column="0" Content="Limit úvěru kreditního účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="5" Grid.Column="0" Content="Limit výběru studentského účtu (Kč):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
-                    <Label Grid.Row="6" Grid.Column="0" Content="Násobek zrychlení času:" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
+                    <Label Grid.Row="6" Grid.Column="0" Content="Interval času (s):" FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <Label Grid.Row="7" Grid.Column="0" Content="..." FontSize="30px" VerticalContentAlignment="Center" Margin="10"/>
                     <TextBox x:Name="tbSettingsDebitInterest"  Grid.Row="1" Grid.Column="1" Margin="10,10" FontSize="40px"/>
                     <TextBox x:Name="tbSettingsCreditInterest" Grid.Row="2" Grid.Column="1" Margin="10,10" FontSize="40px"/>

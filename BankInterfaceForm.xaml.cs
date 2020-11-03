@@ -44,7 +44,7 @@ namespace BankApp
 
             //inicializace timeru a data
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1 * (1 / Settings.TimeMultiple));
+            timer.Interval = TimeSpan.FromSeconds(Settings.TimeInterval);
             timer.Tick += Timer_Tick;
             date = DateTime.Today;
             currentMonth = date.Month;
@@ -72,6 +72,7 @@ namespace BankApp
             {
                 item.Value.MakeInterest();
             }
+            lbAccountsUpdate();
             MessageBox.Show("Proběhlo měsíční úročení!");
         }
 
@@ -310,7 +311,7 @@ namespace BankApp
             tbSettingsDebitLimitWitherdraw.Text = Settings.DebetLimitWitherdraw.ToString();
             tbSettingsCreditLimit.Text = Settings.CreditLimit.ToString();
             tbSettingsStudentLimitWitherdraw.Text = Settings.StudentLimitWitherdraw.ToString();
-            tbSettingsTimeMultiple.Text = Settings.TimeMultiple.ToString();
+            tbSettingsTimeMultiple.Text = Settings.TimeInterval.ToString();
         }
 
         private void butSaveSettings_Click(object sender, RoutedEventArgs e)
@@ -322,16 +323,16 @@ namespace BankApp
             cI1 = cI2 = cI3 = cI4 = cI5 = cI6 = true;
 
             //promněné pro uložení převedených hodnot
-            int debetInterest;
-            int creditInterest;
+            double debetInterest;
+            double creditInterest;
             int debetLimitWitherdraw;
             int creditLimit;
             int studentLimitWitherdraw;
             int timeMultiple;
 
             //kontrola a konverze zadaných hodnot
-            cI1 = int.TryParse(tbSettingsDebitInterest.Text, out debetInterest);
-            cI2 = int.TryParse(tbSettingsCreditInterest.Text, out creditInterest);
+            cI1 = double.TryParse(tbSettingsDebitInterest.Text, out debetInterest);
+            cI2 = double.TryParse(tbSettingsCreditInterest.Text, out creditInterest);
             cI3 = int.TryParse(tbSettingsDebitLimitWitherdraw.Text, out debetLimitWitherdraw);
             cI4 = int.TryParse(tbSettingsCreditLimit.Text, out creditLimit);
             cI5 = int.TryParse(tbSettingsStudentLimitWitherdraw.Text, out studentLimitWitherdraw);
@@ -345,7 +346,7 @@ namespace BankApp
                 Settings.DebetLimitWitherdraw = debetLimitWitherdraw;
                 Settings.CreditLimit = creditLimit;
                 Settings.StudentLimitWitherdraw = studentLimitWitherdraw;
-                Settings.TimeMultiple = timeMultiple;
+                Settings.TimeInterval = timeMultiple;
 
                 MessageBox.Show("Hodnoty uloženy.");
             }
@@ -466,7 +467,7 @@ namespace BankApp
 
         private void butSimulation_Click(object sender, RoutedEventArgs e)
         {
-            timer.Interval = TimeSpan.FromSeconds(1 * (1/Settings.TimeMultiple));
+            timer.Interval = TimeSpan.FromSeconds(Settings.TimeInterval);
 
             if (!simulationOn) simulationOn = true;
             else simulationOn = false;
@@ -481,6 +482,16 @@ namespace BankApp
                 timer.Stop();
                 butSimulation.Background = new SolidColorBrush(Color.FromRgb(40, 185, 25));
             }            
+        }
+
+        private void cbAccountType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbAccountType.SelectedIndex == 1)
+            {
+                tbDeposit.IsEnabled = false;
+                tbDeposit.Clear();
+            }
+            else tbDeposit.IsEnabled = true;
         }
     }
 }
