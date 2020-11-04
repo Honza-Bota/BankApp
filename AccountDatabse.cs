@@ -15,6 +15,7 @@ namespace BankApp
         {
             if (File.Exists(path))
             {
+                File.SetAttributes(path, FileAttributes.Normal);
                 string[] logs = File.ReadAllLines(path);
 
                 foreach (var item in logs)
@@ -51,6 +52,7 @@ namespace BankApp
             }
 
             File.WriteAllText(path, data);
+            File.SetAttributes(path, FileAttributes.Hidden);
 
             return true;
         }
