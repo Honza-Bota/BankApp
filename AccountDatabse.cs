@@ -48,7 +48,7 @@ namespace BankApp
             {
                 Account a = item.Value;
 
-                data += $"{a.AccountNumber};{a.Name};{a.Surname};{a.Birthdate};{(int)a.AccountType};{a.MoneyValue}\n";
+                data += $"{a.AccountNumber};{a.Name};{a.Surname};{a.Birthdate};{(int)a.AccountType};{a.GetMoneyValue()}\n";
             }
 
             File.WriteAllText(path, data);
